@@ -1,46 +1,42 @@
-
-import { readFileSync } from 'fs';
-import { sanitizeHtml } from './sanitizer';
-import { ParsedRequest } from './types';
-const twemoji = require('twemoji');
-const twOptions = { folder: 'svg', ext: '.svg' };
+import { readFileSync } from "fs";
+import { sanitizeHtml } from "./sanitizer";
+import { ParsedRequest } from "./types";
+const twemoji = require("twemoji");
+const twOptions = { folder: "svg", ext: ".svg" };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
-const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString('base64');
-const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
-const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
+const rglr = readFileSync(
+  `${__dirname}/../_fonts/Pretnedard-ExtraBold.woff2`
+).toString("base64");
+const bold = readFileSync(
+  `${__dirname}/../_fonts/Pretnedard-Bold.woff2`
+).toString("base64");
 
 function getCss(theme: string, fontSize: string) {
-    let background = 'white';
-    let foreground = 'black';
-    let radial = 'lightgray';
+  let background = "white";
+  let foreground = "black";
+  let radial = "lightgray";
 
-    if (theme === 'dark') {
-        background = 'black';
-        foreground = 'white';
-        radial = 'dimgray';
-    }
-    return `
+  if (theme === "dark") {
+    background = "black";
+    foreground = "white";
+    radial = "dimgray";
+  }
+  return `
     @font-face {
-        font-family: 'Inter';
+        font-family: 'Pretandard';
         font-style:  normal;
         font-weight: normal;
         src: url(data:font/woff2;charset=utf-8;base64,${rglr}) format('woff2');
     }
 
     @font-face {
-        font-family: 'Inter';
+        font-family: 'Pretandard_Bold';
         font-style:  normal;
         font-weight: bold;
         src: url(data:font/woff2;charset=utf-8;base64,${bold}) format('woff2');
     }
 
-    @font-face {
-        font-family: 'Vera';
-        font-style: normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${mono})  format("woff2");
-      }
 
     body {
         background: ${background};
@@ -55,7 +51,7 @@ function getCss(theme: string, fontSize: string) {
 
     code {
         color: #D400FF;
-        font-family: 'Vera';
+        font-family: 'Pretandard', sans-serif;
         white-space: pre-wrap;
         letter-spacing: -5px;
     }
@@ -94,7 +90,7 @@ function getCss(theme: string, fontSize: string) {
     }
     
     .heading {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Pretandard_Bold', sans-serif;
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
@@ -103,15 +99,15 @@ function getCss(theme: string, fontSize: string) {
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
-    let html = sanitizeHtml(text);
-    if (md) {
-        html = html.replace(/\*\*(.+)\*\*/g, (_, match) => `<b>${match}</b>`)
-        html = html.replace(/__(.+)__/g, (_, match) => `<b>${match}</b>`)
-        html = html.replace(/\*(.+)\*/g, (_, match) => `<i>${match}</i>`)
-        html = html.replace(/_(.+)_/g, (_, match) => `<i>${match}</i>`)
-    }
-    return `<!DOCTYPE html>
+  const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
+  let html = sanitizeHtml(text);
+  if (md) {
+    html = html.replace(/\*\*(.+)\*\*/g, (_, match) => `<b>${match}</b>`);
+    html = html.replace(/__(.+)__/g, (_, match) => `<b>${match}</b>`);
+    html = html.replace(/\*(.+)\*/g, (_, match) => `<i>${match}</i>`);
+    html = html.replace(/_(.+)_/g, (_, match) => `<i>${match}</i>`);
+  }
+  return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
     <title>Generated Image</title>
@@ -123,9 +119,12 @@ export function getHtml(parsedReq: ParsedRequest) {
         <div>
             <div class="spacer">
             <div class="logo-wrapper">
-                ${images.map((img, i) =>
-                    getPlusSign(i) + getImage(img, widths[i], heights[i])
-                ).join('')}
+                ${images
+                  .map(
+                    (img, i) =>
+                      getPlusSign(i) + getImage(img, widths[i], heights[i])
+                  )
+                  .join("")}
             </div>
             <div class="spacer">
             <div class="heading">${emojify(html)}
@@ -135,16 +134,16 @@ export function getHtml(parsedReq: ParsedRequest) {
 </html>`;
 }
 
-function getImage(src: string, width ='auto', height = '225') {
-    return `<img
+function getImage(src: string, width = "auto", height = "225") {
+  return `<img
         class="logo"
         alt="Generated Image"
         src="${sanitizeHtml(src)}"
         width="${sanitizeHtml(width)}"
         height="${sanitizeHtml(height)}"
-    />`
+    />`;
 }
 
 function getPlusSign(i: number) {
-    return i === 0 ? '' : '<div class="plus">+</div>';
+  return i === 0 ? "" : '<div class="plus">+</div>';
 }
