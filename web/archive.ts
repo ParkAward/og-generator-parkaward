@@ -157,47 +157,10 @@ const markdownOptions: DropdownOption[] = [
   { text: "Markdown", value: "1" },
 ];
 
-const imageLightOptions: DropdownOption[] = [
-  {
-    text: "Vercel",
-    value:
-      "https://assets.vercel.com/image/upload/front/assets/design/vercel-triangle-black.svg",
-  },
-  {
-    text: "Next.js",
-    value:
-      "https://assets.vercel.com/image/upload/front/assets/design/nextjs-black-logo.svg",
-  },
-  {
-    text: "Hyper",
-    value:
-      "https://assets.vercel.com/image/upload/front/assets/design/hyper-color-logo.svg",
-  },
-];
-
-const imageDarkOptions: DropdownOption[] = [
-  {
-    text: "Vercel",
-    value:
-      "https://assets.vercel.com/image/upload/front/assets/design/vercel-triangle-white.svg",
-  },
-  {
-    text: "Next.js",
-    value:
-      "https://assets.vercel.com/image/upload/front/assets/design/nextjs-white-logo.svg",
-  },
-  {
-    text: "Hyper",
-    value:
-      "https://assets.vercel.com/image/upload/front/assets/design/hyper-bw-logo.svg",
-  },
-];
-
 interface AppState extends ParsedRequest {
   loading: boolean;
   showToast: boolean;
   messageToast: string;
-  selectedImageIndex: number;
   widths: string[];
   heights: string[];
   overrideUrl: URL | null;
@@ -223,13 +186,12 @@ const App = (_: any, state: AppState, setState: SetState) => {
     theme = "light",
     md = true,
     text = "**Hello** World",
-    images = [imageLightOptions[0].value],
+    images = ["https://cdn.jsdelivr.net/gh/remojansen/logo.ts@master/ts.svg"],
     widths = [],
     heights = [],
     showToast = false,
     messageToast = "",
     loading = true,
-    selectedImageIndex = 0,
     overrideUrl = null,
   } = state;
 
@@ -263,11 +225,7 @@ const App = (_: any, state: AppState, setState: SetState) => {
             options: themeOptions,
             value: theme,
             onchange: (val: Theme) => {
-              const options =
-                val === "light" ? imageLightOptions : imageDarkOptions;
-              let clone = [...images];
-              clone[0] = options[selectedImageIndex].value;
-              setLoadingState({ theme: val, images: clone });
+              setLoadingState({ theme: val, images: [] });
             },
           }),
         }),
@@ -305,7 +263,7 @@ const App = (_: any, state: AppState, setState: SetState) => {
             },
           }),
         }),
-        ...images.slice(1).map((image, i) =>
+        ...images.map((image, i) =>
           H(Field, {
             label: `Image ${i + 1}`,
             input: H(
@@ -314,7 +272,7 @@ const App = (_: any, state: AppState, setState: SetState) => {
                 value: image,
                 oninput: (val: string) => {
                   let clone = [...images];
-                  clone[i + 1] = val;
+                  clone[i] = val;
                   setLoadingState({ images: clone, overrideUrl: url });
                 },
               }),
@@ -322,24 +280,24 @@ const App = (_: any, state: AppState, setState: SetState) => {
                 "div",
                 { className: "field-flex" },
                 H(TextInput, {
-                  value: widths[i + 1],
+                  value: widths[i],
                   type: "number",
                   placeholder: "width",
                   small: true,
                   oninput: (val: string) => {
                     let clone = [...widths];
-                    clone[i + 1] = val;
+                    clone[i] = val;
                     setLoadingState({ widths: clone });
                   },
                 }),
                 H(TextInput, {
-                  value: heights[i + 1],
+                  value: heights[i],
                   type: "number",
                   placeholder: "height",
                   small: true,
                   oninput: (val: string) => {
                     let clone = [...heights];
-                    clone[i + 1] = val;
+                    clone[i] = val;
                     setLoadingState({ heights: clone });
                   },
                 })
@@ -352,7 +310,7 @@ const App = (_: any, state: AppState, setState: SetState) => {
                   onclick: (e: MouseEvent) => {
                     e.preventDefault();
                     const filter = (arr: any[]) =>
-                      [...arr].filter((_, n) => n !== i + 1);
+                      [...arr].filter((_, n) => n !== i);
                     const imagesClone = filter(images);
                     const widthsClone = filter(widths);
                     const heightsClone = filter(heights);
@@ -368,15 +326,16 @@ const App = (_: any, state: AppState, setState: SetState) => {
           })
         ),
         H(Field, {
-          label: `Image ${images.length}`,
+          label: `Image ${images.length + 1}`,
           input: H(Button, {
-            label: `Add Image ${images.length}`,
+            label: `Add Image ${images.length + 1}`,
             onclick: () => {
-              const nextImage =
-                images.length === 1
-                  ? "https://cdn.jsdelivr.net/gh/remojansen/logo.ts@master/ts.svg"
-                  : "";
-              setLoadingState({ images: [...images, nextImage] });
+              setLoadingState({
+                images: [
+                  ...images,
+                  "https://cdn.jsdelivr.net/gh/remojansen/logo.ts@master/ts.svg",
+                ],
+              });
             },
           }),
         })

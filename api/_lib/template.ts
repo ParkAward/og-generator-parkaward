@@ -6,10 +6,10 @@ const twOptions = { folder: "svg", ext: ".svg" };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
 const rglr = readFileSync(
-  `${__dirname}/../_fonts/Pretnedard-ExtraBold.woff2`
+  `${__dirname}/../_fonts/Pretendard_ExtraBold.woff2`
 ).toString("base64");
 const bold = readFileSync(
-  `${__dirname}/../_fonts/Pretnedard-Bold.woff2`
+  `${__dirname}/../_fonts/Pretendard_Bold.woff2`
 ).toString("base64");
 
 function getCss(theme: string, fontSize: string) {
@@ -101,6 +101,7 @@ function getCss(theme: string, fontSize: string) {
 export function getHtml(parsedReq: ParsedRequest) {
   const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
   let html = sanitizeHtml(text);
+  console.log("parsedReq", images);
   if (md) {
     html = html.replace(/\*\*(.+)\*\*/g, (_, match) => `<b>${match}</b>`);
     html = html.replace(/__(.+)__/g, (_, match) => `<b>${match}</b>`);
@@ -118,14 +119,18 @@ export function getHtml(parsedReq: ParsedRequest) {
     <body>
         <div>
             <div class="spacer">
-            <div class="logo-wrapper">
-                ${images
-                  .map(
-                    (img, i) =>
-                      getPlusSign(i) + getImage(img, widths[i], heights[i])
-                  )
-                  .join("")}
-            </div>
+            ${
+              images.length > 0
+                ? `<div class="logo-wrapper">` +
+                  images
+                    .map(
+                      (img, i) =>
+                        getPlusSign(i) + getImage(img, widths[i], heights[i])
+                    )
+                    .join("") +
+                  `</div>`
+                : ""
+            } 
             <div class="spacer">
             <div class="heading">${emojify(html)}
             </div>
