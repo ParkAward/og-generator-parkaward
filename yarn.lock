@@ -87,10 +87,10 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
-chrome-aws-lambda@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/chrome-aws-lambda/-/chrome-aws-lambda-6.0.0.tgz#e0966a5759e6b57c24584c2511fb72738b6209ff"
-  integrity sha512-XnFo6AaE5ZYpHYmOmMoj1yCYFeRTx6uFCpJnVuDREWzXevzZvo3gzkyQ6qSKsPW91VGWeQI7wQgnOpW50e+Dzg==
+chrome-aws-lambda@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/chrome-aws-lambda/-/chrome-aws-lambda-7.0.0.tgz#efb73c8d254d433413cf6866c5eadc752d64b417"
+  integrity sha512-GbYXRPYtaA0DLfmxQpuZw1SKTP7rOA4UXiATwiFRJ4Ea6PBYSzqK0YjS7B2WimUBe//ybPfNpPIs8A3WpF0xvA==
   dependencies:
     lambdafs "^2.0.2"
 
@@ -249,6 +249,11 @@ locate-path@^5.0.0:
   integrity sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
   dependencies:
     p-locate "^4.1.0"
+
+marked@4.0.10:
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.10.tgz#423e295385cc0c3a70fa495e0df68b007b879423"
+  integrity sha512-+QvuFj0nGgO970fySghXGmuw+Fd0gD2x3+MqCWLIPf5oxdv1Ka6b2q+z9RP01P/IaKPMEramy+7cNy/Lw8c3hw==
 
 minimatch@^3.0.4:
   version "3.1.2"
@@ -432,10 +437,10 @@ twemoji@13.0.1:
     twemoji-parser "13.0.0"
     universalify "^0.1.2"
 
-typescript@4.1.5:
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.5.tgz#123a3b214aaff3be32926f0d8f1f6e704eb89a72"
-  integrity sha512-6OSu9PTIzmn9TCDiovULTnET6BgXtDYL4Gg4szY+cGsc3JP1dQL8qvE8kShTRx1NIw4Q9IBHlwODjkjWEtMUyA==
+typescript@4.1.6:
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.6.tgz#1becd85d77567c3c741172339e93ce2e69932138"
+  integrity sha512-pxnwLxeb/Z5SP80JDRzVjh58KsM6jZHRAOtTpS7sXLS4ogXNKC9ANxHHZqLLeVHZN35jCtI4JdmLLbLiC1kBow==
 
 unbzip2-stream@1.4.3:
   version "1.4.3"
